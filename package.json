@@ -1,0 +1,29 @@
+{
+  "name": "backend_lab5",
+  "version": "1.0.0",
+  "description": "caching proxy for cat pictures",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node main.js -h 127.0.0.1 -p 3000 -c cache",
+    "dev": "node --watch main.js -h 127.0.0.1 -p 3000 -c cache"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vikdem37/backend_lab5.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vikdem37/backend_lab5/issues"
+  },
+  "homepage": "https://github.com/vikdem37/backend_lab5#readme",
+  "dependencies": {
+    "commander": "^15.0.0",
+    "superagent": "^10.4.1"
+  }
+}
