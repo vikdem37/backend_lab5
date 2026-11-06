@@ -1,0 +1,217 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: cat proxy
+meta:
+  id: wrk_6010f08a64d641988a93ad35cd4eb825
+  created: 1793955658860
+  modified: 1793955670091
+  description: ""
+collection:
+  - name: cat proxy
+    meta:
+      id: fld_fa62b78121c943e8981f90ab2fbcba7c
+      created: 1793955658866
+      modified: 1793960998701
+      sortKey: -1793955631598
+      description: ""
+    children:
+      - url: "{{baseUrl}}/200"
+        name: 1. GET /200 - fresh
+        meta:
+          id: req_63d9ef9f438c4953a1ce75a5a0aef6d4
+          created: 1793955658872
+          modified: 1793960827276
+          isPrivate: false
+          description: ""
+          sortKey: -1793955631597
+        method: GET
+        scripts:
+          afterResponse: |-
+            insomnia.test("200", function () { insomnia.response.to.have.status(200); });
+            insomnia.test("Content-Type: image/jpeg", function () { insomnia.expect(insomnia.response.headers.get("Content-Type")).to.eql("image/jpeg"); });
+            insomnia.test("X-ImageSource: http.cat", function () { insomnia.expect(insomnia.response.headers.get("X-Image-Source")).to.eql("http.cat"); });
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/200"
+        name: 2. GET /200 - cached
+        meta:
+          id: req_e2ebf5b3939749e9908fdbd5ac0a91d8
+          created: 1793955658905
+          modified: 1793960852012
+          isPrivate: false
+          description: ""
+          sortKey: -1793955631596
+        method: GET
+        scripts:
+          afterResponse: |-
+            insomnia.test("200", function () { insomnia.response.to.have.status(200); });
+            insomnia.test("Content-Type: image/jpeg", function () { insomnia.expect(insomnia.response.headers.get("Content-Type")).to.eql("image/jpeg"); });
+            insomnia.test("X-Image-Source: cache", function () { insomnia.expect(insomnia.response.headers.get("X-Image-Source")).to.eql("cache"); });
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/418"
+        name: 3. PUT /418 - reveal the hi
+        meta:
+          id: req_2ff5d523033b445e9adeb44f41a30c73
+          created: 1793955658914
+          modified: 1793960872023
+          isPrivate: false
+          description: ""
+          sortKey: -1793955631595
+        method: PUT
+        body:
+          mimeType: application/octet-stream
+          fileName: C:\Users\User\Downloads\backend_lab5\hi.jpg
+        headers:
+          - name: Content-Type
+            value: image/jpeg
+        scripts:
+          afterResponse: insomnia.test("201", function () {
+            insomnia.response.to.have.status(201); });
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/418"
+        name: 4. GET /418 - scientists reveal
+        meta:
+          id: req_8ecd6cb756b44ababebb38815b82a890
+          created: 1793955658921
+          modified: 1793960888531
+          isPrivate: false
+          description: ""
+          sortKey: -1793955631594
+        method: GET
+        scripts:
+          afterResponse: |-
+            insomnia.test("200", function () { insomnia.response.to.have.status(200); });
+            insomnia.test("Content-Type: image/jpeg", function () { insomnia.expect(insomnia.response.headers.get("Content-Type")).to.eql("image/jpeg"); });
+            insomnia.test("X-Image-Source: cache", function () { insomnia.expect(insomnia.response.headers.get("X-Image-Source")).to.eql("cache"); });
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/418"
+        name: 5. DELETE /418
+        meta:
+          id: req_856e497d5b7b45889b09143f79110055
+          created: 1793955658924
+          modified: 1793960937722
+          isPrivate: false
+          description: ""
+          sortKey: -1793955631593
+        method: DELETE
+        scripts:
+          afterResponse: insomnia.test("200", function () {
+            insomnia.response.to.have.status(200); });
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/418"
+        name: 6. DELETE /418 - gone
+        meta:
+          id: req_4e052abfc5b241f3a36050c39e00e5c8
+          created: 1793955658926
+          modified: 1793960958291
+          isPrivate: false
+          description: ""
+          sortKey: -1793955631592
+        method: DELETE
+        scripts:
+          afterResponse: insomnia.test("404", function () {
+            insomnia.response.to.have.status(404); });
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/999"
+        name: 7. GET /999 - huh
+        meta:
+          id: req_42a76f3e925348c1ba600288e350b96e
+          created: 1793955658928
+          modified: 1793960965671
+          isPrivate: false
+          description: ""
+          sortKey: -1793955631591
+        method: GET
+        scripts:
+          afterResponse: insomnia.test("404", function () {
+            insomnia.response.to.have.status(404); });
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseUrl}}/200"
+        name: 8. POST /200 - Method Not Allowed
+        meta:
+          id: req_9ecd93b6ffd84c84a31b4c437c6e3666
+          created: 1793955658931
+          modified: 1793960993741
+          isPrivate: false
+          description: ""
+          sortKey: -1793955631590
+        method: POST
+        scripts:
+          afterResponse: >-
+            insomnia.test("405", function () {
+            insomnia.response.to.have.status(405); });
+
+            insomnia.test("Allow header: GET, PUT, DELETE", function () {
+            insomnia.expect(insomnia.response.headers.get("Allow")).to.eql("GET,
+            PUT, DELETE"); });
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_66260c62a419f705f22153ab0849c24cf0bff2d9
+    created: 1793955659138
+    modified: 1793960998698
+environments:
+  name: Variables
+  meta:
+    id: env_5f49968f72824f7d9b4b2b033d51d6e0
+    created: 1793955658932
+    modified: 1793960998700
+    isPrivate: false
+  data:
+    baseUrl: http://127.0.0.1:3000
