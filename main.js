@@ -98,8 +98,22 @@ async function handleGet(res, code) {
   sendImage(res, data, 'http.cat');
 }
   
+async function readBody(req) {
+  const chunks = [];
+  for await (const chunk of req) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks);
+}
+
 async function handlePut(req, res, code) {
-  sendText(res, 501, `PUT /${code} Not Implemented`);
+  const data = await readBody(req);
+  if (data.length === 0) {
+    sendText(res, 400, 'Тіло запиту порожнє: надішліть картинку');
+    return;
+  }
+  await saveToCache(code, data);
+  sendText(res, 201, `Картинку для коду ${code} збережено в кеш`);
 }
   
 async function handleDelete(res, code) {
