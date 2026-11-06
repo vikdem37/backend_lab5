@@ -2,7 +2,7 @@ import http from 'node:http';
 import path from 'node:path';
 import { once } from 'node:events';
 import { randomUUID } from 'node:crypto';
-import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rename, rm, unlink, writeFile } from 'node:fs/promises';
 import { Command } from 'commander';
 import superagent from 'superagent';
 
@@ -117,7 +117,16 @@ async function handlePut(req, res, code) {
 }
   
 async function handleDelete(res, code) {
-  sendText(res, 501, `DELETE /${code} Not Implemented`);
+  try {
+    await unlink(cacheFile(code));
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      sendText(res, 404, `Картинки для коду ${code} немає в кеші`);
+      return;
+    }
+    throw new Error('не вдалося видалити картинку з кешу', { cause: err });
+  }
+  sendText(res, 200, `Картинку для коду ${code} видалено з кешу`);
 }
   
 async function handleRequest(req, res) {
