@@ -5,3 +5,17 @@ curl -i -X PATCH http://127.0.0.1:3000/200
 
 curl -i http://127.0.0.1:3000/abc
 curl -i --path-as-is http://127.0.0.1:3000/../main.js
+
+rm -rf cache/*
+curl -s -D - -o /dev/null http://127.0.0.1:3000/200
+curl -s -D - -o /dev/null http://127.0.0.1:3000/200
+
+curl -s -o /tmp/direct-200.jpg https://http.cat/200
+cmp cache/200.jpg /tmp/direct-200.jpg && echo "identical"
+head -c 3 cache/200.jpg | od -An -tx1
+
+curl -s -o /dev/null -w "%{http_code} %{time_total}s\n" http://127.0.0.1:3000/418
+curl -s -o /dev/null -w "%{http_code} %{time_total}s\n" http://127.0.0.1:3000/418
+
+curl -i http://127.0.0.1:3000/999
+ls cache
